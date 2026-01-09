@@ -1,0 +1,49 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row mt-3">
+    <div class="col-8 offset-3">
+    <h3><%=listing.title%> </h3>
+    
+            <p class="card-text"><%= listing.description %></p><br>
+            
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" required>
+
+             <label for="endDate">End Date:</label>
+             <input type="date" id="endDate" required>
+
+             <!-- &#8377; -->
+             <p class="card-text" id="price"> <%= listing.price %></p>
+            <p class="card-text"><%= listing.location %></p>
+            <p class="card-text"><%= listing.country %></p>
+            <p id="result"></p>
+            <button class="btn btn-dark add-btn mt-3" onclick="calculateDays()">Pay Now</button>
+        </div>
+</div>
+
+<script>
+  function calculateDays() {
+    // Get the input values
+    let startDate = new Date(document.getElementById('startDate').value);
+    let endDate = new Date(document.getElementById('endDate').value);
+    let priceString = document.getElementById('price').innerText;
+    
+    // Convert the price to a numeric value
+    let numericValue = parseInt(priceString); // or parseFloat(priceString) if the price can have decimal values
+  
+    
+    // Calculate the difference in milliseconds
+    let timeDifference = endDate - startDate;
+  
+    // Convert the difference to days
+    let daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    
+    // Calculate total price
+    let totalPrice = daysDifference * numericValue;
+  
+    //console.log(totalPrice);
+  
+    // Display the result
+    document.getElementById('result').innerText = 'Total Price: ₹' + totalPrice.toLocaleString("en-IN");
+  }
+  
+  </script>
